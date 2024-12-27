@@ -34,7 +34,7 @@ const MemoryGame = () => {
     if (gameState === 'ongoing' && active.length > 0) {
       const hideTimer = setTimeout(() => {
         setActive([]);
-      }, 2000);
+      }, 500);
       return () => clearTimeout(hideTimer);
     }
   }, [gameState, active]);
@@ -72,7 +72,7 @@ const MemoryGame = () => {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen bg-gray-900 p-4">
-      <h1 className="text-4xl font-bold text-white opacity-60 mb-6">Memory Game</h1>
+      <h1 className="text-4xl font-bold text-white opacity-60 mb-6">NoobMaster</h1>
       <div className="text-xl text-white mb-4">Score: {score}</div>
       <div className="grid grid-cols-3 grid-rows-3 gap-2 rounded-md p-4">
         {Array(9).fill(null).map((_, index) => (
@@ -83,7 +83,7 @@ const MemoryGame = () => {
             className={`
               h-20 w-20 rounded-md transition-all duration-300
               ${active.includes(index) ? 'bg-green-100' : 'bg-green-400'}
-              ${clicked.includes(index) ? 'bg-blue-500' : ''}
+              ${clicked.includes(index) ? 'bg-gray-900' : ''}
               hover:opacity-90 disabled:cursor-not-allowed
             `}
           />

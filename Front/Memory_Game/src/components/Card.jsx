@@ -93,9 +93,12 @@ const MemoryGame = () => {
               disabled={gameState !== "ongoing" || clicked.length >= 3}
               className={`
               h-20 w-20 rounded-md transition-all duration-300
-              ${active.includes(index) ? "bg-green-100" : "bg-green-400"}
-              ${clicked.includes(index) ? "bg-gray-800" : ""}
-              hover:opacity-90 disabled:cursor-not-allowed
+             ${
+                clicked.includes(index)? "bg-gray-900 opacity-100"
+                : active.includes(index)? "bg-green-100 opacity-100"
+                : "bg-green-400 opacity-100"
+              }
+                 hover:opacity-90 disabled:cursor-not-allowed
             `}
             />
           ))}

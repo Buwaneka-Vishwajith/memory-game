@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const MemoryGame = () => {
-
   const location = useLocation();
   const playerName = location.state?.playerName || "Player";
 
   const [active, setActive] = useState([]);
   const [clicked, setClicked] = useState([]);
-  const [gameState, setGameState] = useState("start");
+  const [gameState, setGameState] = useState("initial"); // Changed from "start" to "initial"
   const [score, setScore] = useState(0);
   const [pattern, setPattern] = useState([]);
 
@@ -20,8 +19,8 @@ const MemoryGame = () => {
     const gridSize = getGridSize(score);
     const patternLength = getPatternLength(score);
 
-    console.log("Grid size:", gridSize); // Log the grid size
-    console.log("Pattern length:", patternLength); // Log the pattern length
+    console.log("Grid size:", gridSize);
+    console.log("Pattern length:", patternLength);
     
     while (random.size < patternLength) {
       const randomIndex = Math.floor(Math.random() * gridSize);
@@ -33,7 +32,7 @@ const MemoryGame = () => {
   };
   
   useEffect(() => {
-    if (gameState === "start") {
+    if (gameState === "initial" || gameState === "nextLevel") {
       const startTimer = setTimeout(() => {
         const newPattern = getRandom();
         setPattern(newPattern);
@@ -50,7 +49,7 @@ const MemoryGame = () => {
       console.log("Active boxes:", active);
       const hideTimer = setTimeout(() => {
         setActive([]);
-      }, score >= 5 ? 400 : 300); // Slightly longer display time for 4x4 grid
+      }, score >= 5 ? 400 : 300);
       return () => clearTimeout(hideTimer);
     }
   }, [gameState, active, score]);
@@ -61,7 +60,7 @@ const MemoryGame = () => {
         setClicked([]);
         setScore(0);
         setPattern([]);
-        setGameState("start");
+        setGameState("initial");
       }, 3000);
       return () => clearTimeout(resetTimer);
     }
@@ -83,11 +82,10 @@ const MemoryGame = () => {
       if (newClicked.sort().join(",") === pattern.sort().join(",")) {
         setScore(score + 1);
         setClicked([]);
-        setGameState("start"); // Reset to start state to trigger new pattern generation
+        setGameState("nextLevel"); // Changed from "start" to "nextLevel"
       } else {
         setGameState("gameOver");
       }
-      
     }
   };
 
@@ -126,7 +124,7 @@ const MemoryGame = () => {
           <h2 className="">Game Over! Score: {score}</h2>
         </div>
       )}
-      {gameState === "start" && (
+      {gameState === "initial" && (
         <div className="text-white text-2xl mt-4 font-bold opacity-70">
           Get Ready!
         </div>

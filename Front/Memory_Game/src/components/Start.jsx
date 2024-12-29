@@ -11,17 +11,17 @@ const Start = () => {
       navigate('/game', { state: { playerName } });
     }
   };
-  
+
 
   return (
     <div className="flex flex-col justify-center items-center h-screen bg-gray-900">
-      <h1 className="text-4xl font-bold text-white opacity-60 mb-8">Memory Game</h1>
+      <h1 className="text-4xl font-bold text-white opacity-60 mb-8">Noob Master</h1>
       <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4">
         <input
           type="text"
           value={playerName}
           onChange={(e) => setPlayerName(e.target.value)}
-          placeholder="Enter your name"
+          placeholder="Your name?"
           className="px-4 py-2 rounded-md bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-green-500"
           required
         />

@@ -11,6 +11,7 @@ const Start = () => {
       navigate('/game', { state: { playerName } });
     }
   };
+  
 
   return (
     <div className="flex flex-col justify-center items-center h-screen bg-gray-900">

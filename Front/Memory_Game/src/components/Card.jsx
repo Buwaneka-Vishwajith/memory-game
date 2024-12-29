@@ -7,7 +7,7 @@ const MemoryGame = () => {
 
   const [active, setActive] = useState([]);
   const [clicked, setClicked] = useState([]);
-  const [gameState, setGameState] = useState("initial"); // Changed from "start" to "initial"
+  const [gameState, setGameState] = useState("waiting"); // Changed initial state to "waiting"
   const [score, setScore] = useState(0);
   const [pattern, setPattern] = useState([]);
 
@@ -29,6 +29,10 @@ const MemoryGame = () => {
     
     console.log("Generated random indices:", Array.from(random));
     return Array.from(random);
+  };
+
+  const startGame = () => {
+    setGameState("initial");
   };
   
   useEffect(() => {
@@ -60,7 +64,7 @@ const MemoryGame = () => {
         setClicked([]);
         setScore(0);
         setPattern([]);
-        setGameState("initial");
+        setGameState("waiting"); // Changed to return to waiting state
       }, 3000);
       return () => clearTimeout(resetTimer);
     }
@@ -82,7 +86,7 @@ const MemoryGame = () => {
       if (newClicked.sort().join(",") === pattern.sort().join(",")) {
         setScore(score + 1);
         setClicked([]);
-        setGameState("nextLevel"); // Changed from "start" to "nextLevel"
+        setGameState("nextLevel");
       } else {
         setGameState("gameOver");
       }
@@ -128,6 +132,16 @@ const MemoryGame = () => {
         <div className="text-white text-2xl mt-4 font-bold opacity-70">
           Get Ready!
         </div>
+      )}
+      {gameState === "waiting" && (
+        <button
+          onClick={startGame}
+          className="px-6 py-3 bg-gray-700 text-white hover:bg-gray-300 hover:text-gray-800
+                     transition-colors text-md font-bold mt-4 bg-opacity-50 backdrop-blur-xl
+                      rounded-xl z-10 shadow-lg"
+        >
+          I'm Ready!
+        </button>
       )}
     </div>
   );

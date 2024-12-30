@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import Background from "./Background";
 
 const MemoryGame = () => {
   const location = useLocation();
@@ -116,6 +117,7 @@ const MemoryGame = () => {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen bg-gray-900 p-4">
+      {/* <Background playerName={playerName} /> */}
       <h1 className="text-4xl font-bold text-white opacity-60 mb-6">
         {playerName}
       </h1>

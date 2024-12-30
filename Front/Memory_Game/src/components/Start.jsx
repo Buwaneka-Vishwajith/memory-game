@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 const Start = () => {
   const [playerName, setPlayerName] = useState("");
   const navigate = useNavigate();

@@ -11,8 +11,29 @@ const MemoryGame = () => {
   const [score, setScore] = useState(0);
   const [pattern, setPattern] = useState([]);
 
-  const getGridSize = (score) => (score >= 5 ? 16 : 9);
-  const getPatternLength = (score) => (score >= 5 ? 4 : 3);
+  // const getGridSize = (score) => (score >= 5 ? 16 : 9);
+
+  const getGridSize = (score) => {
+    if(score >= 10){
+      return 25;
+    }else if (score >= 5){
+      return 16;
+    }else{
+      return 9;
+    }
+  };
+
+  const getPatternLength = (score) => {
+    if(score >= 10){
+      return 5;
+    }else if(score >= 5){
+      return 4;
+    }else{
+      return 3;
+    }
+  };
+
+  // const getPatternLength = (score) => (score >= 5 ? 4 : 3);
 
   const getRandom = () => {
     const random = new Set();
@@ -101,7 +122,11 @@ const MemoryGame = () => {
       <div className="text-xl text-white mb-4 font-bold opacity-80">
         Score: {score}
       </div>
-      <div className={`grid ${score >= 5 ? 'grid-cols-4 grid-rows-4' : 'grid-cols-3 grid-rows-3'} gap-2 rounded-md p-4`}>
+      <div
+      //  className={`grid ${score >= 5 ? 'grid-cols-4 grid-rows-4' : 'grid-cols-3 grid-rows-3'} gap-2 rounded-md p-4`}
+      className={`grid ${score >= 10 ? 'grid-cols-5 grid-rows-5': score >= 5 ? 'grid-cols-4 grid-rows-4': 'grid-cols-3 grid-rows-3'
+      } gap-2 rounded-md p-4`}
+      >
         {Array(getGridSize(score))
           .fill(null)
           .map((_, index) => (

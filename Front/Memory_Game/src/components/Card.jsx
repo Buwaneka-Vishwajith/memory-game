@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import Background from "./Background";
+import Background from "./Background"; //removed
 
 const MemoryGame = () => {
   const location = useLocation();

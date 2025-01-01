@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Background from "./Background"; //removed
 
+import { saveScore } from '../services/scoreService';
+
 const MemoryGame = () => {
   const location = useLocation();
   const playerName = location.state?.playerName || "Player";
@@ -30,7 +32,7 @@ const MemoryGame = () => {
     }else if(score >= 5){
       return 4;
     }else{
-      return 3;
+      return 3; 
     }
   };
 
@@ -39,7 +41,7 @@ const MemoryGame = () => {
   const getRandom = () => {
     const random = new Set();
     const gridSize = getGridSize(score);
-    const patternLength = getPatternLength(score);
+    const patternLength = getPatternLength(score); 
 
     console.log("Grid size:", gridSize);
     console.log("Pattern length:", patternLength);
@@ -56,7 +58,8 @@ const MemoryGame = () => {
   const startGame = () => {
     setGameState("initial");
   };
-  
+
+   +
   useEffect(() => {
     if (gameState === "initial" || gameState === "nextLevel") {
       const startTimer = setTimeout(() => {
@@ -82,6 +85,17 @@ const MemoryGame = () => {
 
   useEffect(() => {
     if (gameState === "gameOver") {
+
+          // Save score to database
+    const saveGameScore = async () => {
+      try {
+        await saveScore(playerName, score);
+        console.log('Score saved successfully');
+      } catch (error) {
+        console.error('Error saving score:', error);
+      }
+    };
+
       const resetTimer = setTimeout(() => {
         setClicked([]);
         setScore(0);
@@ -89,8 +103,8 @@ const MemoryGame = () => {
         setGameState("waiting"); // Changed to return to waiting state
       }, 3000);
       return () => clearTimeout(resetTimer);
-    }
-  }, [gameState]);
+    }  
+  }, [gameState,score,playerName]);
 
   const handleClick = (index) => {
     const patternLength = getPatternLength(score);

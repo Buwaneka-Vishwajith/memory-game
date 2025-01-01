@@ -96,6 +96,8 @@ const MemoryGame = () => {
       }
     };
 
+    saveGameScore();
+
       const resetTimer = setTimeout(() => {
         setClicked([]);
         setScore(0);

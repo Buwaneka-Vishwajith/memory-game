@@ -1,4 +1,3 @@
-// index.js
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
@@ -28,7 +27,7 @@ connectDB();
 // Routes
 app.use('/api/scores', scoreRoutes);
 
-// Basic test route
+// Basic test route test
 app.get('/', (req, res) => {
   res.send('Memory Game API is running');
 });

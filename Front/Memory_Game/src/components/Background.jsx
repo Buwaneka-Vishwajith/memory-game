@@ -1,25 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 
-const Background = ({ playerName }) => {
+const Background = () => {
+  const [boxes, setBoxes] = useState([]);
+  
+  useEffect(() => {
+    const generateBoxes = () => {
+      const newBoxes = Array(4).fill(null).map((_, i) => ({
+        id: i,
+        left: Math.random() * 80 + 10, // 10-90%
+        top: Math.random() * 80 + 10,  // 10-90%
+        size: Math.random() * 60 + 100,  // 60-100px
+        delay: Math.random() * 2000,    // 0-2s delay
+        duration: Math.random() * 1000 + 2000 // 3-5s duration
+      }));
+      setBoxes(newBoxes);
+    };
+
+    
+
+    generateBoxes();
+    const interval = setInterval(generateBoxes, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="absolute inset-0 z-0 overflow-hidden">
-      {Array(50) // Adjust the number for how many times you want the name to appear
-        .fill(null)
-        .map((_, index) => (
-          <div
-            key={index}
-            style={{
-              position: "absolute",
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              fontSize: `${Math.random() * 1.5 + 0.5}rem`,
-              opacity: Math.random() * 0.05 + 0.15,
-              color: "rgba(255, 255, 255, 0.5)",
-            }}
-          >
-            {playerName}
-          </div>
-        ))}
+    <div className="fixed inset-0 overflow-hidden pointer-events-none">
+      {boxes.map((box) => (
+        <div
+          key={box.id}
+          className="absolute bg-green-300 rounded-lg opacity-10 animate-pulse"
+          style={{
+            left: `${box.left}%`,
+            top: `${box.top}%`,
+            width: `${box.size}px`,
+            height: `${box.size}px`,
+            animation: `pulse ${box.duration}ms ease-in-out infinite`,
+            animationDelay: `${box.delay}ms`
+          }}
+        />
+      ))}
     </div>
   );
 };

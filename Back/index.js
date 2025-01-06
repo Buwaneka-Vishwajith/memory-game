@@ -13,16 +13,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// MongoDB Connection
-// const connectDB = async () => {
-//   try {
-//     await mongoose.connect(process.env.MONGODB_URI);
-//     console.log(`MongoDB Connected: ${mongoose.connection.host}`);
-//   } catch (error) {
-//     console.error(`Error: ${error.message}`);
-//     process.exit(1);
-//   }
-// };
 
 // Connect to MongoDB
 connectDB();

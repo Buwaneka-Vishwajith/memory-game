@@ -59,7 +59,7 @@ const MemoryGame = () => {
     setGameState("initial");
   };
 
-   +
+   
   useEffect(() => {
     if (gameState === "initial" || gameState === "nextLevel") {
       const startTimer = setTimeout(() => {

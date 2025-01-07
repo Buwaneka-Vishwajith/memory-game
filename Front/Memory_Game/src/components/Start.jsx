@@ -41,7 +41,7 @@ const Start = () => {
               value={playerName}
               onChange={(e) => setPlayerName(e.target.value)}
               placeholder="Name Yourself!"
-              className="px-4 py-2 rounded-md text-center bg-gray-800/30 text-white 
+              className="px-4 py-2 rounded-md text-center bg-gray-800/10 text-white 
                          focus:outline-none backdrop-blur-sm placeholder:text-gray-400"
               required
             />

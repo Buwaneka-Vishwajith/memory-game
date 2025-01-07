@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Background from "./Background"; //removed
+import { ChevronDown } from 'lucide-react';
+
 
 import { saveScore } from '../services/scoreService';
 
@@ -82,6 +84,7 @@ const MemoryGame = () => {
       return () => clearTimeout(hideTimer);
     }
   }, [gameState, active, score]);
+
 
   useEffect(() => {
     if (gameState === "gameOver") {
@@ -186,6 +189,17 @@ const MemoryGame = () => {
           I'm Ready!
         </button>
       )}
+
+      {/* ChevronDown */}
+      <div 
+          className="absolute bottom-8  transform -translate-x-1/2 cursor-pointer animate-bounce"
+          // onClick={scrollToLeaderboard}
+        >
+          <ChevronDown 
+            size={38} 
+            className="text-white opacity-60 hover:opacity-100 transition-opacity"
+          />
+        </div>
     </div>
   );
 };

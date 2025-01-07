@@ -186,11 +186,11 @@ const MemoryGame = () => {
           </button>
         )}
         <div 
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer animate-bounce"
+          className="absolute bottom-8  transform -translate-x-1/2 cursor-pointer animate-bounce"
           onClick={scrollToLeaderboard}
         >
           <ChevronDown 
-            size={48} 
+            size={38} 
             className="text-white opacity-60 hover:opacity-100 transition-opacity"
           />
         </div>

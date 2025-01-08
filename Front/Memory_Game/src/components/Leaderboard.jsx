@@ -27,10 +27,9 @@ const Leaderboard = () => {
 
   return (
 
-    <section className="relative w-full bg-gray-900">
-      {/* Watermark text - changed to absolute positioning */}
+    <section className="relative w-full bg-gray-900 overflow-x-hidden">
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="text-[13.6vw] font-black opacity-50 mb-8 ">
+        <div className="text-[13.6vw] font-black opacity-60 mb-8">
         <span className="text-green-100">L</span>
         <span className="text-blue-300">E</span>
         <span className="text-green-100">A</span>
@@ -47,9 +46,14 @@ const Leaderboard = () => {
 
       <div 
         id="leaderboard" 
-        className="relative min-h-screen flex justify-center items-center p-4"
+        className="z-10 relative min-h-screen flex justify-center items-center p-4"
       >
-        <div className="w-full max-w-sm  rounded-lg shadow-xl p-5 z-10 backdrop-blur-lg">
+       <div
+  className=" w-full max-w-sm rounded-lg p-5 z-10 backdrop-blur-lg"
+  style={{
+    boxShadow: "10px 10px 11px 5px rgba(0, 0, 0, 0.2)", // Added example color for clarity
+  }}
+>
           {/* <div className="mb-6">
             <h2 className="text-2xl font-bold text-white text-center">Top Scores</h2>
           </div> */}

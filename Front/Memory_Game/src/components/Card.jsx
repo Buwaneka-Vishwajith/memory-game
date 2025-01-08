@@ -125,8 +125,8 @@ const MemoryGame = () => {
   };
 
   return (
-    <div className="overflow-x-hidden">
-    <div className="min-h-screen bg-gray-900">
+    <div className="overflow-hidden min-h-screen">
+    <div className=" bg-gray-900">
       <div className="flex flex-col justify-center items-center h-screen bg-gray-900 p-4 relative">
         <h1 className="text-4xl font-bold text-white opacity-60 mb-6">
           {playerName}

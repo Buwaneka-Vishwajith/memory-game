@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ChevronDown } from 'lucide-react';
 import Leaderboard from './Leaderboard';
+import { saveScore } from "../services/scoreService";
 
 const MemoryGame = () => {
   const location = useLocation();
@@ -81,13 +82,8 @@ const MemoryGame = () => {
     if (gameState === "gameOver") {
       const saveGameScore = async () => {
         try {
-          await fetch('/api/scores', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ playerName, score }),
-          });
+          await saveScore(playerName, score);
+          console.log('Score saved for:', playerName, score); // Debug log
         } catch (error) {
           console.error('Error saving score:', error);
         }
@@ -129,6 +125,7 @@ const MemoryGame = () => {
   };
 
   return (
+    <div className="overflow-x-hidden">
     <div className="min-h-screen bg-gray-900">
       <div className="flex flex-col justify-center items-center h-screen bg-gray-900 p-4 relative">
         <h1 className="text-4xl font-bold text-white opacity-60 mb-6">
@@ -194,8 +191,9 @@ const MemoryGame = () => {
             className="text-white opacity-60 hover:opacity-100 transition-opacity"
           />
         </div>
-      </div>
-      <Leaderboard />
+      </div>     
+    </div>
+    <Leaderboard />
     </div>
   );
 };

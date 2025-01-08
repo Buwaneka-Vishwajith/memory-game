@@ -4,7 +4,9 @@ const API_URL = 'http://localhost:5000/api/scores';
 
 export const saveScore = async (playerName, score) => {
   try {
+    console.log('Sending score data:', { playerName, score }); // Debug log
     const response = await axios.post(API_URL, { playerName, score });
+    console.log('Score saved successfully:', response.data); // Debug log
     return response.data;
   } catch (error) {
     console.error('Error saving score:', error);

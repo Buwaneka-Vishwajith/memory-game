@@ -60,7 +60,7 @@ const Leaderboard = () => {
               highScores.map((score, index) => (
                 <div 
                   key={score._id} 
-                  className="flex justify-between items-center p-4 bg-gray-700/50 rounded-lg hover:bg-gray-600 transition-colors"
+                  className="flex justify-between items-center p-4 bg-gray-700/50 rounded-lg hover:bg-gray-400/30 transition-colors"
                 >
                   <div className="flex items-center space-x-4 ">
                     <span className="text-xl font-bold text-gray-400 ">

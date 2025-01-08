@@ -28,8 +28,9 @@ const Leaderboard = () => {
 
   return (
 
+  
     <section className="relative w-full bg-gray-900 overflow-x-hidden">
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div className="absolute inset-0 flex items-center justify-center ">
         <div className="text-[13.6vw] font-black opacity-60 mb-8">
         <span className="text-green-100">L</span>
         <span className="text-blue-300">E</span>

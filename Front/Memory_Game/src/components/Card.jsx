@@ -1,8 +1,60 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { ChevronDown, Trophy, Brain } from 'lucide-react';
+import { ChevronDown, Trophy } from 'lucide-react';
 import Leaderboard from './Leaderboard';
 import { saveScore } from "../services/scoreService";
+
+const GridBackground = () => {
+  const location = useLocation();
+  const playerName = location.state?.playerName || "Player";
+  return (
+    <div 
+      className="fixed inset-0 pointer-events-auto" >
+     {/* Fixed grid pattern */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          background: `
+            linear-gradient(90deg, rgba(34, 197, 94, 0.1) 1px, transparent 1px),
+            linear-gradient(rgba(34, 197, 94, 0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '100px 100px'
+        }}
+      />
+      {/* <h1 className="flex items-center justify-center font-bold text-blue-300/40 opacity-60 text-[8.9vw]">{playerName}</h1> */}
+    <div className="absolute inset-0 flex items-center justify-center">
+     <div 
+      className="pr-[95%] text-[4vw] font-black opacity-60 "
+      style={{ writingMode: 'vertical-rl', textOrientation: 'upright' }}>
+      <span className="text-gray-700">H</span>
+      <span className="text-gray-700">I</span>
+      <span className="text-gray-700">L</span>
+      <span className="text-gray-700">I</span>
+      <span className="text-gray-700">G</span>
+      <span className="text-gray-700">H</span>
+      <span className="text-gray-700">T</span>
+     </div>
+     {/* <div 
+      className="pl-[29%] text-[4vw] font-black opacity-60 "
+      style={{ writingMode: 'vertical-rl', textOrientation: 'upright' }}>
+      <span className="text-gray-700">H</span>
+      <span className="text-gray-700">U</span>
+      <span className="text-gray-700">N</span>
+      <span className="text-gray-700">T</span>
+     </div> */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="pr-[78%] text-[4vw] font-black opacity-60 mb-[32%]">
+        <span className="text-gray-700">U </span>
+        <span className="text-gray-700">N </span>
+        <span className="text-gray-700">T </span>
+        </div>
+      </div>
+
+    </div>
+    
+    </div>
+  );
+};
 
 const MemoryGame = () => {
   const location = useLocation();
@@ -126,18 +178,19 @@ const MemoryGame = () => {
 
   return (
     <div className="overflow-hidden min-h-screen">
-      <div className="bg-gray-900">
-        <div className="flex flex-col justify-center items-center h-screen bg-gray-900 p-4 relative z-20">
+      <div className="bg-gray-900 relative">
+        <GridBackground />
+
+        <div className=" flex flex-col justify-center items-center h-screen bg-transparent p-4 relative z-20">
           <h1 className="text-4xl font-bold text-white opacity-60 mb-6">
             {playerName}
           </h1>
           <div className="flex items-center gap-4 mb-4">
-            <div className="flex items-center gap-2 bg-gray-800 px-4 py-2 rounded-lg">
+            <div className="flex items-center gap-2 bg-gray-800/60 backdrop-blur-sm px-4 py-2 rounded-lg">
               <Trophy className="text-green-300 w-5 h-5" />
               <span className="text-xl text-white/70 font-bold">{score}</span>
             </div>
-            <div className="flex items-center gap-2 bg-gray-800 px-4 py-2 rounded-lg">
-              {/* <Brain className="text-blue-400 w-5 h-5" /> */}
+            <div className="flex items-center gap-2 bg-gray-800/60 backdrop-blur-sm px-4 py-2 rounded-lg">
               <span className="text-white/70 font-bold tracking-wider">
                 {score >= 10 ? 'Memory Godzilla 🦖' : score >= 5 ? 'Almost Einstein 🧠' : 'Potato Brain 🥔'}
               </span>
@@ -175,7 +228,7 @@ const MemoryGame = () => {
           </div>
           {gameState === "gameOver" && (
             <div className="text-red-500 text-2xl mt-4 font-bold opacity-70">
-              <h2> Back to Potato Brain? 🥔 Score: {score}</h2>
+              <h2>Back to Potato Brain? 🥔 Score: {score}</h2>
             </div>
           )}
           {gameState === "initial" && (
@@ -186,8 +239,8 @@ const MemoryGame = () => {
           {gameState === "waiting" && (
             <button
               onClick={startGame}
-              className="px-6 py-3 bg-gray-700 text-white/80 hover:bg-gray-300 hover:text-gray-800
-                       transition-colors text-md font-bold mt-4 bg-opacity-50 backdrop-blur-xl
+              className="px-6 py-3 bg-gray-700/50 text-white/80 hover:bg-gray-300 hover:text-gray-800
+                       transition-colors text-md font-bold mt-4 backdrop-blur-xl
                        rounded-xl z-10 shadow-lg"
             >
               I'm Ready!
@@ -202,7 +255,8 @@ const MemoryGame = () => {
               className="text-white opacity-60 hover:opacity-100 transition-opacity"
             />
           </div>
-        </div>     
+        </div>   
+          
       </div>
       <Leaderboard />
     </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Trophy, Brain } from 'lucide-react';
 import Leaderboard from './Leaderboard';
 import { saveScore } from "../services/scoreService";
 
@@ -83,7 +83,7 @@ const MemoryGame = () => {
       const saveGameScore = async () => {
         try {
           await saveScore(playerName, score);
-          console.log('Score saved for:', playerName, score); // Debug log
+          console.log('Score saved for:', playerName, score);
         } catch (error) {
           console.error('Error saving score:', error);
         }
@@ -126,74 +126,85 @@ const MemoryGame = () => {
 
   return (
     <div className="overflow-hidden min-h-screen">
-    <div className=" bg-gray-900">
-      <div className="flex flex-col justify-center items-center h-screen bg-gray-900 p-4 relative">
-        <h1 className="text-4xl font-bold text-white opacity-60 mb-6">
-          {playerName}
-        </h1>
-        <div className="text-xl text-white mb-4 font-bold opacity-80">
-          Score: {score}
-        </div>
-        <div
-          className={`grid ${
-            score >= 10 ? 'grid-cols-5 grid-rows-5': 
-            score >= 5 ? 'grid-cols-4 grid-rows-4': 
-            'grid-cols-3 grid-rows-3'
-          } gap-2 rounded-md p-4`}
-        >
-          {Array(getGridSize(score))
-            .fill(null)
-            .map((_, index) => (
-              <button
-                key={index}
-                onClick={() => handleClick(index)}
-                disabled={gameState !== "ongoing" || clicked.length >= getPatternLength(score)}
-                className={`
-                  h-16 w-16 rounded-md transition-all duration-300
-                  ${
-                    clicked.includes(index)
-                      ? "bg-gray-900 opacity-100"
-                      : active.includes(index)
-                      ? "bg-green-100 opacity-100"
-                      : "bg-green-400 opacity-100"
-                  }
-                  hover:opacity-90 disabled:cursor-not-allowed
-                `}
-              />
-            ))}
-        </div>
-        {gameState === "gameOver" && (
-          <div className="text-red-500 text-2xl mt-4 font-bold opacity-70">
-            <h2>Game Over! Score: {score}</h2>
+      <div className="bg-gray-900">
+        <div className="flex flex-col justify-center items-center h-screen bg-gray-900 p-4 relative z-20">
+          <h1 className="text-4xl font-bold text-white opacity-60 mb-6">
+            {playerName}
+          </h1>
+          <div className="flex items-center gap-4 mb-4">
+            <div className="flex items-center gap-2 bg-gray-800 px-4 py-2 rounded-lg">
+              <Trophy className="text-green-300 w-5 h-5" />
+              <span className="text-xl text-white/70 font-bold">{score}</span>
+            </div>
+            <div className="flex items-center gap-2 bg-gray-800 px-4 py-2 rounded-lg">
+              {/* <Brain className="text-blue-400 w-5 h-5" /> */}
+              <span className="text-white/70 font-bold tracking-wider">
+                {score >= 10 ? 'Memory Godzilla 🦖' : score >= 5 ? 'Almost Einstein 🧠' : 'Potato Brain 🥔'}
+              </span>
+            </div>
           </div>
-        )}
-        {gameState === "initial" && (
-          <div className="text-white text-2xl mt-4 font-bold opacity-70">
-            Get Ready!
-          </div>
-        )}
-        {gameState === "waiting" && (
-          <button
-            onClick={startGame}
-            className="px-6 py-3 bg-gray-700 text-white hover:bg-gray-300 hover:text-gray-800
-                     transition-colors text-md font-bold mt-4 bg-opacity-50 backdrop-blur-xl
-                     rounded-xl z-10 shadow-lg"
+          <div
+            className={`grid ${
+              score >= 10 ? 'grid-cols-5 grid-rows-5': 
+              score >= 5 ? 'grid-cols-4 grid-rows-4': 
+              'grid-cols-3 grid-rows-3'
+            } gap-2 rounded-md p-4`}
           >
-            I'm Ready!
-          </button>
-        )}
-        <div 
-          className="absolute bottom-8  transform -translate-x-1/2 cursor-pointer animate-bounce"
-          onClick={scrollToLeaderboard}
-        >
-          <ChevronDown 
-            size={38} 
-            className="text-white opacity-60 hover:opacity-100 transition-opacity"
-          />
-        </div>
-      </div>     
-    </div>
-    <Leaderboard />
+            {Array(getGridSize(score))
+              .fill(null)
+              .map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleClick(index)}
+                  disabled={gameState !== "ongoing" || clicked.length >= getPatternLength(score)}
+                  className={`
+                    h-16 w-16 rounded-md transition-all duration-300
+                    transform hover:scale-95 active:scale-90
+                    ${
+                      clicked.includes(index)
+                        ? "bg-gray-900 opacity-100"
+                        : active.includes(index)
+                        ? "bg-green-100 opacity-100"
+                        : "bg-green-400 opacity-100"
+                    }
+                    hover:opacity-90 disabled:cursor-not-allowed
+                    hover:shadow-lg
+                  `}
+                />
+              ))}
+          </div>
+          {gameState === "gameOver" && (
+            <div className="text-red-500 text-2xl mt-4 font-bold opacity-70">
+              <h2> Back to Potato Brain? 🥔 Score: {score}</h2>
+            </div>
+          )}
+          {gameState === "initial" && (
+            <div className="text-white text-2xl mt-4 font-bold opacity-70">
+              Get Ready!
+            </div>
+          )}
+          {gameState === "waiting" && (
+            <button
+              onClick={startGame}
+              className="px-6 py-3 bg-gray-700 text-white/80 hover:bg-gray-300 hover:text-gray-800
+                       transition-colors text-md font-bold mt-4 bg-opacity-50 backdrop-blur-xl
+                       rounded-xl z-10 shadow-lg"
+            >
+              I'm Ready!
+            </button>
+          )}
+          <div 
+            className="absolute bottom-8 transform -translate-x-1/2 cursor-pointer animate-bounce"
+            onClick={scrollToLeaderboard}
+          >
+            <ChevronDown
+              size={38} 
+              className="text-white opacity-60 hover:opacity-100 transition-opacity"
+            />
+          </div>
+        </div>     
+      </div>
+      <Leaderboard />
     </div>
   );
 };

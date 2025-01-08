@@ -1,5 +1,6 @@
 // Leaderboard.jsx
 import React, { useState, useEffect } from 'react';
+import { ChevronUp } from 'lucide-react';
 
 
 const Leaderboard = () => {
@@ -78,8 +79,8 @@ const Leaderboard = () => {
                 </div>
               ))
             )}
-          </div>
-        </div>
+          </div>         
+        </div>        
       </div>
     </section>
   );

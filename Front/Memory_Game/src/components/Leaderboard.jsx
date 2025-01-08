@@ -1,6 +1,7 @@
 // Leaderboard.jsx
 import React, { useState, useEffect } from 'react';
 
+
 const Leaderboard = () => {
   const [highScores, setHighScores] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,11 +26,22 @@ const Leaderboard = () => {
   }, []);
 
   return (
+
     <section className="relative w-full bg-gray-900">
       {/* Watermark text - changed to absolute positioning */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="text-[13vw] font-black tracking-wider text-gray-600/20 whitespace-nowrap select-none ">
-          LEADERBOARD
+        <div className="text-[13.6vw] font-black opacity-50 mb-8 ">
+        <span className="text-green-100">L</span>
+        <span className="text-blue-300">E</span>
+        <span className="text-green-100">A</span>
+        <span className="text-green-300">D</span>
+        <span className="text-blue-300">E</span>
+        <span className="text-blue-400">R</span>
+        <span className="text-blue-300">B</span>
+        <span className="text-green-100">O</span>     
+        <span className="text-green-100">A</span>
+        <span className="text-green-300">R</span>
+        <span className="text-green-100">D</span>
         </div>
       </div>
 
@@ -37,7 +49,7 @@ const Leaderboard = () => {
         id="leaderboard" 
         className="relative min-h-screen flex justify-center items-center p-4"
       >
-        <div className="w-full max-w-sm bg-gray-800/90 backdrop-blur-sm rounded-lg shadow-xl p-5 z-10">
+        <div className="w-full max-w-sm  rounded-lg shadow-xl p-5 z-10 backdrop-blur-lg">
           {/* <div className="mb-6">
             <h2 className="text-2xl font-bold text-white text-center">Top Scores</h2>
           </div> */}
@@ -48,10 +60,10 @@ const Leaderboard = () => {
               highScores.map((score, index) => (
                 <div 
                   key={score._id} 
-                  className="flex justify-between items-center p-4 bg-gray-700/90 rounded-lg hover:bg-gray-600 transition-colors"
+                  className="flex justify-between items-center p-4 bg-gray-700/50 rounded-lg hover:bg-gray-600 transition-colors"
                 >
-                  <div className="flex items-center space-x-4">
-                    <span className="text-xl font-bold text-gray-400">
+                  <div className="flex items-center space-x-4 ">
+                    <span className="text-xl font-bold text-gray-400 ">
                       #{index + 1}
                     </span>
                     <span className="font-medium text-white">{score.playerName}</span>

@@ -8,10 +8,26 @@ import Water from "./Water";
 const GridBackground = () => {
   const location = useLocation();
   const playerName = location.state?.playerName || "Player";
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.scrollY;
+      // Start fading out when scrolling past 100px
+      if (currentScrollPos > 30) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <div 
-      className="fixed inset-0 pointer-events-auto" >
-     {/* Fixed grid pattern */}
+    <div className="fixed inset-0 pointer-events-auto cursor-custom">
+      {/* Fixed grid pattern */}
       <div 
         className="absolute inset-0"
         style={{
@@ -22,8 +38,14 @@ const GridBackground = () => {
           backgroundSize: '100px 100px'
         }}
       />
-    <h1 className="flex items-center justify-center font-bold text-blue-300/40 opacity-60 text-[8.9vw]">{playerName}</h1>
-    <Water />   
+      <h1 
+        className={`flex items-center justify-center font-bold text-blue-300/40 text-[8.9vw]
+          transition-all duration-300 ease-in-out
+          ${isVisible ? 'opacity-60' : 'opacity-0'}`}
+      >
+        {playerName}
+      </h1>
+      <Water />   
     </div>
   );
 };
@@ -149,14 +171,14 @@ const MemoryGame = () => {
   };
 
   return (
-    <div className="overflow-hidden min-h-screen">
+    <div className="overflow-hidden min-h-screen cursor-custom">
       <div className="bg-gray-900 relative">
         <GridBackground />
 
         <div className=" flex flex-col justify-center items-center h-screen bg-transparent p-4 relative z-20">
-          <h1 className="text-4xl font-bold text-white opacity-60 mb-6">
+          {/* <h1 className="text-4xl font-bold text-white opacity-60 mb-6">
             {playerName}
-          </h1>
+          </h1> */}
           <div className="flex items-center gap-4 mb-4">
             <div className="flex items-center gap-2 bg-gray-800/60 backdrop-blur-sm px-4 py-2 rounded-lg">
               <Trophy className="text-green-300 w-5 h-5" />
@@ -183,8 +205,8 @@ const MemoryGame = () => {
                   onClick={() => handleClick(index)}
                   disabled={gameState !== "ongoing" || clicked.length >= getPatternLength(score)}
                   className={`
-                    h-16 w-16 rounded-md transition-all duration-300
-                    transform hover:scale-95 active:scale-90
+                    h-16 w-16  rounded-md transition-all duration-300
+                    transform hover:scale-95 active:scale-90 
                     ${
                       clicked.includes(index)
                         ? "bg-gray-900 opacity-100"
@@ -193,7 +215,7 @@ const MemoryGame = () => {
                         : "bg-green-400 opacity-100"
                     }
                     hover:opacity-90 disabled:cursor-not-allowed
-                    hover:shadow-lg
+                    hover:shadow-lg cursor-custom
                   `}
                 />
               ))}
@@ -213,7 +235,7 @@ const MemoryGame = () => {
               onClick={startGame}
               className="px-6 py-3 bg-gray-700/50 text-white/80 hover:bg-gray-300 hover:text-gray-800
                        transition-colors text-md font-bold mt-4 backdrop-blur-xl
-                       rounded-xl z-10 shadow-lg"
+                       rounded-xl z-10 shadow-lg cursor-custom"
             >
               I'm Ready!
             </button>
@@ -224,7 +246,7 @@ const MemoryGame = () => {
           >
             <ChevronDown
               size={38} 
-              className="text-white opacity-60 hover:opacity-100 transition-opacity"
+              className="text-white opacity-60 hover:opacity-100 transition-opacity cursor-custom"
             />
           </div>
         </div>   

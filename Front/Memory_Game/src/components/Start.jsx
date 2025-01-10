@@ -16,8 +16,20 @@ const Start = () => {
 
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen bg-gray-900">
+    
+    <div className="flex flex-col justify-center items-center h-screen bg-gray-900 cursor-custom">
       <Background />
+      <div 
+        className="absolute inset-0"
+        style={{
+          background: `
+            linear-gradient(90deg, rgba(34, 197, 94, 0.1) 1px, transparent 1px),
+            linear-gradient(rgba(34, 197, 94, 0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '300px 300px'
+        }}
+      />
+
       <div className="p-8 rounded-xl bg-gray-800/30 backdrop-blur-lg ">
       <div className="z-10 flex flex-col items-center gap-8">
 
@@ -47,7 +59,7 @@ const Start = () => {
             />
             <button
               type="submit"
-              className="px-6 py-2 bg-green-400 text-gray-900 font-bold rounded-md hover:bg-green-200 transition-colors backdrop-blur-sm"
+              className="px-6 py-2 bg-green-400 text-gray-900 font-bold rounded-md hover:bg-green-200 transition-colors backdrop-blur-sm cursor-custom"
             >
               Let's Go!
             </button>

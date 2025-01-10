@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { ChevronDown, Trophy } from 'lucide-react';
 import Leaderboard from './Leaderboard';
 import { saveScore } from "../services/scoreService";
+import Water from "./Water";
 
 const GridBackground = () => {
   const location = useLocation();
@@ -21,37 +22,8 @@ const GridBackground = () => {
           backgroundSize: '100px 100px'
         }}
       />
-      {/* <h1 className="flex items-center justify-center font-bold text-blue-300/40 opacity-60 text-[8.9vw]">{playerName}</h1> */}
-    <div className="absolute inset-0 flex items-center justify-center">
-     <div 
-      className="pr-[95%] text-[4vw] font-black opacity-60 "
-      style={{ writingMode: 'vertical-rl', textOrientation: 'upright' }}>
-      <span className="text-gray-700">H</span>
-      <span className="text-gray-700">I</span>
-      <span className="text-gray-700">L</span>
-      <span className="text-gray-700">I</span>
-      <span className="text-gray-700">G</span>
-      <span className="text-gray-700">H</span>
-      <span className="text-gray-700">T</span>
-     </div>
-     {/* <div 
-      className="pl-[29%] text-[4vw] font-black opacity-60 "
-      style={{ writingMode: 'vertical-rl', textOrientation: 'upright' }}>
-      <span className="text-gray-700">H</span>
-      <span className="text-gray-700">U</span>
-      <span className="text-gray-700">N</span>
-      <span className="text-gray-700">T</span>
-     </div> */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="pr-[78%] text-[4vw] font-black opacity-60 mb-[32%]">
-        <span className="text-gray-700">U </span>
-        <span className="text-gray-700">N </span>
-        <span className="text-gray-700">T </span>
-        </div>
-      </div>
-
-    </div>
-    
+    <h1 className="flex items-center justify-center font-bold text-blue-300/40 opacity-60 text-[8.9vw]">{playerName}</h1>
+    <Water />   
     </div>
   );
 };

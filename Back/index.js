@@ -14,13 +14,13 @@ app.use(cors());
 app.use(express.json());
 
 
-// Connect to MongoDB
+
 connectDB();
 
-// Routes
+
 app.use('/api/scores', scoreRoutes);
 
-// Basic test route test
+
 app.get('/', (req, res) => {
   res.send('Memory Game API is running');
 });

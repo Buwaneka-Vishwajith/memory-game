@@ -7,11 +7,11 @@ const Background = () => {
     const generateBoxes = () => {
       const newBoxes = Array(4).fill(null).map((_, i) => ({
         id: i,
-        left: Math.random() * 80 + 10, // 10-90%
-        top: Math.random() * 80 + 10,  // 10-90%
-        size: Math.random() * 60 + 100,  // 60-100px
-        delay: Math.random() * 2000,    // 0-2s delay
-        duration: Math.random() * 1000 + 2000 // 3-5s duration
+        left: Math.random() * 80 + 10, 
+        top: Math.random() * 80 + 10,  
+        size: Math.random() * 60 + 100,  
+        delay: Math.random() * 2000,    
+        duration: Math.random() * 1000 + 2000 
       }));
       setBoxes(newBoxes);
     };

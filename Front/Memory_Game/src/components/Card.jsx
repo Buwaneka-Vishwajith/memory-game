@@ -13,7 +13,7 @@ const GridBackground = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;
-      // Start fading out when scrolling past 100px
+      
       if (currentScrollPos > 30) {
         setIsVisible(false);
       } else {

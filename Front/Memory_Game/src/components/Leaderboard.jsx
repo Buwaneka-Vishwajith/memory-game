@@ -53,7 +53,7 @@ const Leaderboard = () => {
        <div
   className=" w-full max-w-sm rounded-lg p-5 z-10 backdrop-blur-lg"
   style={{
-    boxShadow: "10px 10px 11px 5px rgba(0, 0, 0, 0.2)", // Added example color for clarity
+    boxShadow: "10px 10px 11px 5px rgba(0, 0, 0, 0.2)", 
   }}
 >
           {/* <div className="mb-6">

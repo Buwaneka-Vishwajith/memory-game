@@ -143,7 +143,7 @@ const MemoryGame = () => {
         setPattern([]);
         setGameState("waiting");
       }, 3000);
-      return () => clearTimeout(resetTimer);
+      return () => clearTimeout(resetTimer); 
     }  
   }, [gameState, score, playerName]);
 

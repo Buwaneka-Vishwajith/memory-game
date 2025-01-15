@@ -5,7 +5,7 @@ import Leaderboard from './Leaderboard';
 import { saveScore } from "../services/scoreService";
 import Water from "./Water";
 
-const GridBackground = () => {
+const GridBackground = () => {   
   const location = useLocation();
   const playerName = location.state?.playerName || "Player";
   const [isVisible, setIsVisible] = useState(true);

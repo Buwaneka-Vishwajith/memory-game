@@ -11,7 +11,7 @@ const GridBackground = () => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = () => { 
       const currentScrollPos = window.scrollY;
       
       if (currentScrollPos > 30) {
@@ -42,8 +42,8 @@ const GridBackground = () => {
         className={`flex items-center justify-center font-bold text-blue-300/40 text-[8.9vw]
           transition-all duration-300 ease-in-out
           ${isVisible ? 'opacity-60' : 'opacity-0'}`}
-      >
-        {playerName}
+      > 
+        {playerName} 
       </h1>
       <Water />   
     </div>
@@ -102,7 +102,7 @@ const MemoryGame = () => {
       behavior: 'smooth' 
     });
   };
-
+ 
   useEffect(() => {
     if (gameState === "initial" || gameState === "nextLevel") {
       const startTimer = setTimeout(() => {
@@ -115,21 +115,21 @@ const MemoryGame = () => {
     }
   }, [gameState, score]);
 
-  useEffect(() => {
+  useEffect(() => { 
     if (gameState === "ongoing" && active.length > 0) {
       const hideTimer = setTimeout(() => {
         setActive([]);
       }, score >= 5 ? 400 : 300);
-      return () => clearTimeout(hideTimer);
+      return () => clearTimeout(hideTimer); 
     }
-  }, [gameState, active, score]);
-
+  }, [gameState, active, score]); 
+ 
   useEffect(() => {
     if (gameState === "gameOver") {
       const saveGameScore = async () => {
         try {
           await saveScore(playerName, score);
-          console.log('Score saved for:', playerName, score);
+          console.log('Score saved for:', playerName, score); 
         } catch (error) {
           console.error('Error saving score:', error);
         }

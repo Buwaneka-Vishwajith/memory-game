@@ -12,9 +12,9 @@ const Start = () => {
     if (playerName.trim()) {
       navigate('/game', { state: { playerName } });
     }
-  };
-
-
+  }; 
+ 
+  
   return (
     
     <div className="flex flex-col justify-center items-center h-screen bg-gray-900 cursor-custom">

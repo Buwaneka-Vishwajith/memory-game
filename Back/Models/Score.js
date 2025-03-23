@@ -4,7 +4,8 @@ import mongoose from 'mongoose';
 const scoreSchema = new mongoose.Schema({
   playerName: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   score: {
     type: Number,

@@ -21,7 +21,7 @@ const Water = () => {
         </div>
 
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="pr-[78%] text-[4vw] font-black opacity-60 mb-[43%]">
+          <div className="pr-[78%] text-[4vw] font-black opacity-60 mb-[38%]">
             <span className="text-gray-500">U </span>
             <span className="text-gray-700">N </span>
             <span className="text-gray-600">T </span>
@@ -47,7 +47,7 @@ const Water = () => {
         </div>
 
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="pl-[78%] text-[4vw] font-black opacity-60 mb-[42.6%]">
+          <div className="pl-[81%] text-[4vw] font-black opacity-60 mb-[38%]">
             <span className="text-gray-500">T </span>
             <span className="text-gray-600">N </span>
             <span className="text-gray-700">U </span>

@@ -4,6 +4,9 @@ import { ChevronDown, Trophy } from 'lucide-react';
 import Leaderboard from './Leaderboard';
 import { saveScore } from "../services/scoreService";
 import Water from "./Water";
+import axios from 'axios';
+import GameFeedback from "./GameFeedback.jsx";
+
 
 const GridBackground = () => {   
   const location = useLocation();
@@ -27,7 +30,6 @@ const GridBackground = () => {
 
   return (
     <div className="fixed inset-0 pointer-events-auto cursor-custom">
-      {/* Fixed grid pattern */}
       <div 
         className="absolute inset-0"
         style={{
@@ -59,6 +61,7 @@ const MemoryGame = () => {
   const [gameState, setGameState] = useState("waiting");
   const [score, setScore] = useState(0);
   const [pattern, setPattern] = useState([]);
+  const [feedback, setFeedback] = useState("");
 
   const getGridSize = (score) => {
     if(score >= 10) {
@@ -128,12 +131,28 @@ const MemoryGame = () => {
     if (gameState === "gameOver") {
       const saveGameScore = async () => {
         try {
+          // Save score
           await saveScore(playerName, score);
           console.log('Score saved for:', playerName, score); 
+
+          // Generate AI Feedback
+          const response = await axios.post('/api/feedback/generate', {
+            playerName,
+            correctHighlights: score,
+            missedHighlights: 0, // You might want to track this more precisely
+            timeTaken: 0, // Add timing logic if needed
+            accuracyRate: 100, // You can calculate this based on your game logic
+            score: score
+          });
+
+          setFeedback(response.data.feedback);
         } catch (error) {
-          console.error('Error saving score:', error);
+          console.error('Error saving score or generating feedback:', error);
+          setFeedback("Great job playing! Keep playing to improve your memory skills.");
         }
       };
+
+      
 
       saveGameScore();
 
@@ -142,6 +161,7 @@ const MemoryGame = () => {
         setScore(0);
         setPattern([]);
         setGameState("waiting");
+        setFeedback("");
       }, 3000);
       return () => clearTimeout(resetTimer); 
     }  
@@ -176,9 +196,6 @@ const MemoryGame = () => {
         <GridBackground />
 
         <div className=" flex flex-col justify-center items-center h-screen bg-transparent p-4 relative z-20">
-          {/* <h1 className="text-4xl font-bold text-white opacity-60 mb-6">
-            {playerName}
-          </h1> */}
           <div className="flex items-center gap-4 mb-4">
             <div className="flex items-center gap-2 bg-gray-800/60 backdrop-blur-sm px-4 py-2 rounded-lg">
               <Trophy className="text-green-300 w-5 h-5" />
@@ -220,11 +237,35 @@ const MemoryGame = () => {
                 />
               ))}
           </div>
-          {gameState === "gameOver" && (
-            <div className="text-red-500 text-2xl mt-4 font-bold opacity-70">
-              <h2>Back to Potato Brain? 🥔 Score: {score}</h2>
+          {/* {gameState === "gameOver" && (
+            <div className="text-center mt-4">
+              <h2 className="text-red-500 text-2xl font-bold opacity-70">
+                Back to Potato Brain? 🥔 Score: {score}
+              </h2>
+              {feedback && (
+                <div className="bg-gray-800/60 backdrop-blur-sm p-4 rounded-lg mt-4">
+                  <p className="text-white/80 text-center">{feedback}</p>
+                </div>
+              )}
             </div>
-          )}
+          )} */}
+          {gameState === "gameOver" && (
+  <div className="text-center mt-4">
+    <h2 className="text-red-500 text-2xl font-bold opacity-70">
+      Back to Potato Brain? 🥔 Score: {score}
+    </h2>
+    <GameFeedback 
+      playerName={playerName} 
+      score={score} 
+      correctHighlights={score}  // You can adjust this based on your game logic
+      missedHighlights={0}       // Track missed highlights if necessary
+      timeTaken={0}              // Add time tracking if needed
+      accuracyRate={100}         // This can be calculated based on game logic
+    />
+  </div>
+)}
+
+
           {gameState === "initial" && (
             <div className="text-white text-2xl mt-4 font-bold opacity-70">
               Get Ready!

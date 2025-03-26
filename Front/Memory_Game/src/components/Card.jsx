@@ -217,7 +217,7 @@ const MemoryGame = () => {
         setPattern([]);
         setGameState("waiting");
         setFeedback("");
-      }, 3000);
+      }, 15000);
       return () => clearTimeout(resetTimer); 
     }  
   }, [gameState, score, playerName]);
@@ -292,7 +292,9 @@ const MemoryGame = () => {
                 />
               ))}
           </div>
-          {gameState === "gameOver" && (
+
+          
+          {gameState === "gameOver" && (  
             <div className="text-center mt-4">
               <h2 className="text-red-500 text-2xl font-bold opacity-70">
                 Back to Potato Brain? 🥔 Score: {score}
@@ -332,6 +334,8 @@ const MemoryGame = () => {
               I'm Ready!
             </button>
           )}
+
+
           <div 
             className="absolute bottom-8 transform -translate-x-1/2 cursor-pointer animate-bounce"
             onClick={scrollToLeaderboard}

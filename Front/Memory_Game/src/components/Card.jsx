@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { ChevronDown, Trophy } from 'lucide-react';
+import { ChevronDown, Trophy, Sparkles } from 'lucide-react';
 import Leaderboard from './Leaderboard';
 import { saveScore } from "../services/scoreService";
 import Water from "./Water";
 import axios from 'axios';
-import GameFeedback from "./GameFeedback.jsx";
-
+import GameAIAnalysis from "./GameAIAnalysis";
 
 const GridBackground = () => {   
   const location = useLocation();
@@ -62,6 +61,13 @@ const MemoryGame = () => {
   const [score, setScore] = useState(0);
   const [pattern, setPattern] = useState([]);
   const [feedback, setFeedback] = useState("");
+  
+  // New state for AI analysis
+  const [aiAnalysis, setAIAnalysis] = useState(null);
+  const [isLoadingAnalysis, setIsLoadingAnalysis] = useState(false);
+
+  const [starttime, setStartTime] = useState(null);
+  const [missedHighlights, setMissedHighlights] = useState(0);
 
   const getGridSize = (score) => {
     if(score >= 10) {
@@ -96,7 +102,50 @@ const MemoryGame = () => {
     return Array.from(random);
   };
 
+  // New method for AI analysis
+  const handleAIAnalysis = async () => {
+    setIsLoadingAnalysis(true);
+    try {
+      // Calculate the number of correct clicks
+      const correctClicks = clicked.filter(click => pattern.includes(click)).length;
+  
+      // Calculate the number of incorrect clicks (those not in the pattern)
+      const incorrectClicks = clicked.length - correctClicks;
+  
+      // Calculate the missed highlights: total pattern items - correct clicks
+      const missed = pattern.length - correctClicks;
+  
+      // Calculate accuracy rate (correct clicks vs total attempts made)
+      const accuracyRate = pattern.length > 0 
+        ? ((correctClicks / (correctClicks + incorrectClicks)) * 100)
+        : 0;
+  
+      // Calculate time taken in seconds
+      const timeTaken = Math.max((Date.now() - starttime) / 1000, 0.01); // Avoid 0 seconds
+  
+      // Send the data to your API for analysis
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/gameplay/analyze`, {
+        playerName,
+        correctHighlights: correctClicks,
+        missedHighlights: missed,
+        timeTaken,
+        accuracyRate,
+        score
+      });
+  
+      // Set the AI-generated analysis to be displayed
+      setAIAnalysis(response.data.analysis);
+    } catch (error) {
+      console.error('Error generating AI analysis:', error);
+      setAIAnalysis("Unable to generate AI analysis at this moment.");
+    } finally {
+      setIsLoadingAnalysis(false);
+    }
+  };
+  
+
   const startGame = () => {
+    setStartTime(Date.now());  //start the timer
     setGameState("initial");
   };
 
@@ -131,17 +180,25 @@ const MemoryGame = () => {
     if (gameState === "gameOver") {
       const saveGameScore = async () => {
         try {
+          const missed = pattern.length - clicked.length;  //missed highlights
+          setMissedHighlights(missed);
+
+          const timeTaken = (Date.now() - starttime) / 1000  //in seconds
+
+          // Calculate accuracy rate
+          const accuracyRate = (clicked.length / pattern.length) * 100;
+
           // Save score
           await saveScore(playerName, score);
           console.log('Score saved for:', playerName, score); 
 
-          // Generate AI Feedback
+          // Generate AI Feedback (if needed)
           const response = await axios.post('/api/feedback/generate', {
             playerName,
             correctHighlights: score,
-            missedHighlights: 0, // You might want to track this more precisely
-            timeTaken: 0, // Add timing logic if needed
-            accuracyRate: 100, // You can calculate this based on your game logic
+            missedHighlights: missed,
+            timeTaken: timeTaken,
+            accuracyRate: accuracyRate,
             score: score
           });
 
@@ -151,8 +208,6 @@ const MemoryGame = () => {
           setFeedback("Great job playing! Keep playing to improve your memory skills.");
         }
       };
-
-      
 
       saveGameScore();
 
@@ -237,34 +292,30 @@ const MemoryGame = () => {
                 />
               ))}
           </div>
-          {/* {gameState === "gameOver" && (
+          {gameState === "gameOver" && (
             <div className="text-center mt-4">
               <h2 className="text-red-500 text-2xl font-bold opacity-70">
                 Back to Potato Brain? 🥔 Score: {score}
               </h2>
-              {feedback && (
-                <div className="bg-gray-800/60 backdrop-blur-sm p-4 rounded-lg mt-4">
-                  <p className="text-white/80 text-center">{feedback}</p>
-                </div>
+              <button
+                onClick={handleAIAnalysis}
+                disabled={isLoadingAnalysis}
+                className="px-6 py-3 bg-purple-700/50 text-white/80 hover:bg-purple-300 hover:text-purple-800
+                           transition-colors text-md font-bold mt-4 backdrop-blur-xl
+                           rounded-xl z-10 shadow-lg cursor-custom flex items-center justify-center gap-2"
+              >
+                <Sparkles className="w-5 h-5" />
+                {isLoadingAnalysis ? 'Analyzing...' : 'Get AI Gameplay Analysis'}
+              </button>
+              
+              {aiAnalysis && (
+                <GameAIAnalysis 
+                  analysis={aiAnalysis} 
+                  onClose={() => setAIAnalysis(null)} 
+                />
               )}
             </div>
-          )} */}
-          {gameState === "gameOver" && (
-  <div className="text-center mt-4">
-    <h2 className="text-red-500 text-2xl font-bold opacity-70">
-      Back to Potato Brain? 🥔 Score: {score}
-    </h2>
-    <GameFeedback 
-      playerName={playerName} 
-      score={score} 
-      correctHighlights={score}  // You can adjust this based on your game logic
-      missedHighlights={0}       // Track missed highlights if necessary
-      timeTaken={0}              // Add time tracking if needed
-      accuracyRate={100}         // This can be calculated based on game logic
-    />
-  </div>
-)}
-
+          )}
 
           {gameState === "initial" && (
             <div className="text-white text-2xl mt-4 font-bold opacity-70">
@@ -291,7 +342,6 @@ const MemoryGame = () => {
             />
           </div>
         </div>   
-          
       </div>
       <Leaderboard />
     </div>

@@ -4,8 +4,8 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import scoreRoutes from './routes/scores.js';
 import connectDB from "./Config/db.js"
-import feedbackRoutes from "./routes/feedback.js"
-
+// import feedbackRoutes from "./routes/feedback.js"
+import gameRoutes from './routes/gameRoutes.js';
 
 
 const app = express();
@@ -15,13 +15,13 @@ app.use(cors());
 app.use(express.json());
 
 
-
+app.use(gameRoutes);
 
 connectDB();
 
 
 app.use('/api/scores', scoreRoutes);
-app.use('/api/feedback', feedbackRoutes); // Add this line to register feedback routes
+// app.use('/api/feedback', feedbackRoutes); 
 
 
 
